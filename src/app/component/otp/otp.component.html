@@ -1,0 +1,11 @@
+<div class="form-box">
+  <mat-card class="form">
+    <form class="form-container" [formGroup]="otp" (ngSubmit)="VerifyOtp()">
+      <mat-form-field appearance="fill" class="input">
+        <mat-label>Enter OTP</mat-label>
+        <input matInput type="text" maxlength="6" formControlName="otp">
+      </mat-form-field>
+      <button mat-raised-button color="primary">Verify</button>
+    </form>
+  </mat-card>
+</div>

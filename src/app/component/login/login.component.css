@@ -1,0 +1,29 @@
+.form-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f7f7f7;
+
+}
+
+.form {
+  max-width: 500px;
+  width: 500px;
+  padding: 70px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+}
+.form-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.input {
+  width: 100%;
+  margin-bottom: 5px;
+}

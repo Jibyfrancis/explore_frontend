@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { WindowService } from './services/window.service';
+
 
 @Component({
   selector: 'app-root',
@@ -7,4 +9,10 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'frontend';
+  windowRef: any
+
+constructor( private windowService:WindowService){}
+  ngOnInit() {
+    this.windowRef = this.windowService.windowRef
+  }
 }

@@ -1,0 +1,36 @@
+<div class="form-box">
+  <mat-card class="form">
+    <mat-card-title class="title">Welcome To Explore</mat-card-title>
+    <mat-card-subtitle class="subtitle"></mat-card-subtitle>
+    <form class="form-container"  [formGroup]="signUpform" (ngSubmit)="signInwithNumber()" >
+      <mat-form-field class="input">
+        <mat-select placeholder="Country Code" formControlName="countryCode" >
+          <mat-option *ngFor="let code of countryCodes" [value]="code.value" >
+            {{ code.label }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field class="input" >
+        <input matInput type="tel" placeholder="Mobile Number" formControlName="mobileNumber">
+        <mat-error *ngIf="getError('mobileNumber', 'pattern')">Only Numbers</mat-error>
+        <mat-error *ngIf="getError('mobileNumber', 'minlength')">Mobile number should have at least 10</mat-error>
+      </mat-form-field>
+      <div id="sign-in-button"></div>
+
+      <button id="sign-in-button" mat-raised-button color="primary" type="submit">Create Account</button>
+    </form>
+    <hr>
+    <p>Or</p>
+
+    <button mat-raised-button class="button" color="primary" (click)="signInWithGoogle()">
+      <fa-icon [icon]="fagoogle"></fa-icon> Continue with Google
+    </button >
+    <button mat-raised-button class="button" color="primary" (click)="signInWithEmail()">
+      <fa-icon [icon]="famail"></fa-icon> Continue with Email
+    </button >
+
+    <!-- <div class="form-section">
+      <p>Have an account? <a href="">Log in</a> </p>
+    </div> -->
+  </mat-card>
+</div>

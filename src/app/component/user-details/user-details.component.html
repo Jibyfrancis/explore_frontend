@@ -1,0 +1,19 @@
+<div class="form-box">
+  <mat-card class="form">
+    <form class="form-container" [formGroup]="userDetailsForm" (ngSubmit)="submit()">
+      <mat-form-field appearance="fill" class="input">
+        <mat-label>Enter Full Name</mat-label>
+        <input matInput type="text" formControlName="userName" placeholder="Firstname Secondname">
+      </mat-form-field>
+      <mat-form-field appearance="fill" class="input">
+        <mat-label>Email</mat-label>
+        <input matInput type="email" formControlName="email" >
+      </mat-form-field>
+      <mat-form-field appearance="fill" class="input">
+        <mat-label>Password</mat-label>
+        <input matInput type="password" formControlName="password" placeholder="space is not allowed">
+      </mat-form-field>
+      <button mat-raised-button color="primary">Finish</button>
+    </form>
+  </mat-card>
+</div>

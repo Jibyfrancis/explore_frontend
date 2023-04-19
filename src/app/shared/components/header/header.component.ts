@@ -35,9 +35,11 @@ export class HeaderComponent implements OnInit {
       const userData = localStorage.getItem('user');
       if (userData !== null) {
         const userDataObj = JSON.parse(userData)
-        this.sharedService.loggedInUser = userDataObj.user.userName
+        const name = userDataObj.user.userName
+
+        this.sharedService.loggedInUser = name.split(" ")[0]
+        this.user=name.split(" ")[0]
         this.isLoggedIn = true
-        this.user = userDataObj.user.userName
         console.log(this.user);
 
       }

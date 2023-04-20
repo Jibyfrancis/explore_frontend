@@ -3,7 +3,7 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { GoogleAuthProvider, RecaptchaVerifier, signInWithPhoneNumber, Auth, } from "@angular/fire/auth"
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { Observable, observable } from 'rxjs';
+import { Observable,} from 'rxjs';
 
 
 
@@ -14,6 +14,7 @@ import { Observable, observable } from 'rxjs';
   providedIn: 'root'
 })
 export class AuthServiceService {
+
 
   appVerifier: any;
   confirmationResult: any;

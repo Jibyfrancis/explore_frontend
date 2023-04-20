@@ -12,6 +12,10 @@ import {MatMenuModule} from '@angular/material/menu';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import { MatNativeDateModule } from "@angular/material/core";
 import {MatGridListModule} from '@angular/material/grid-list';
+import { LayoutModule } from '@angular/cdk/layout';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatListModule } from '@angular/material/list';
+
 
 
 
@@ -34,7 +38,10 @@ import {MatGridListModule} from '@angular/material/grid-list';
     MatMenuModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    MatGridListModule
+    MatGridListModule,
+    MatListModule,
+    MatSidenavModule,
+    LayoutModule
 
 
   ]

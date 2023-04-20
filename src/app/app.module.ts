@@ -3,10 +3,10 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HomeComponent } from './component/home/home.component';
+import { HomeComponent } from './client/component/home/home.component';
 import { HeaderComponent } from './shared/components/header/header.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { SigninComponent } from './component/signin/signin.component';
+import { SigninComponent } from './client/component/signin/signin.component';
 import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
@@ -19,9 +19,15 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { environment } from 'src/enviroments/environment';
 import { HttpClientModule,HTTP_INTERCEPTORS,HttpClientXsrfModule} from '@angular/common/http';
 import { InterceptorHttpInterceptor } from './interceptor/interceptor-http.interceptor';
-import { OtpComponent } from './component/otp/otp.component';
-import { UserDetailsComponent } from './component/user-details/user-details.component';
-import { LoginComponent } from './component/login/login.component';
+import { OtpComponent } from './client/component/otp/otp.component';
+import { UserDetailsComponent } from './client/component/user-details/user-details.component';
+import { LoginComponent } from './client/component/login/login.component';
+import { AdminRoutingModule } from './admin/admin-routing.module';
+import { AdminModule } from './admin/admin.module';
+import { UserLayoutComponent } from './client/component/user-layout.component';
+
+
+
 
 // import firebase from 'firebase/compat/app';
 // firebase.initializeApp(environment.firebaseConfig);
@@ -38,7 +44,8 @@ import { LoginComponent } from './component/login/login.component';
     SigninComponent,
     OtpComponent,
     UserDetailsComponent,
-    LoginComponent
+    LoginComponent,
+    UserLayoutComponent
 
 
   ],
@@ -56,6 +63,8 @@ import { LoginComponent } from './component/login/login.component';
     HttpClientModule,
     HttpClientXsrfModule,
     AngularFireAuthModule,
+    // AdminRoutingModule,
+    AdminModule
     // AngularFirestoreModule
   ],
   providers: [{

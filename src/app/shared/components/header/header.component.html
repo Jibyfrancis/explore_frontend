@@ -1,10 +1,12 @@
-<mat-toolbar color="primary">
+<mat-toolbar>
   <mat-toolbar-row>
-    <h1 style="color: black; font-weight: 500; margin-bottom: 0;">Explore</h1>
+    <!-- <h1 style="color: black; font-weight: 500; margin-bottom: 0;">Explore</h1> -->
+    <h1 style="font-family: 'Roboto', sans-serif; font-size: 40px; letter-spacing: 1px; color: #333; font-weight: 500; margin-bottom: 0;">Explore</h1>
+
     <span class="spacer"></span>
     <div fxShow="false" fxShow.gt-sm="true">
       <!-- <a style="margin-left: 10px;" mat-button mat-raised-button  *ngFor="let item of menuItems; trackBy: trackByFn" (click)="navigateToItem(item)">{{ item.name }}</a> -->
-      <button  mat-icon-button color="primary" [matMenuTriggerFor]="menu"  > {{ isLoggedIn ? user : '' }} <mat-icon>menu</mat-icon></button>
+      <button style="border-radius: 20px;"  mat-raised-button color="" [matMenuTriggerFor]="menu"  > {{ isLoggedIn ? user : '' }} <mat-icon>menu</mat-icon><mat-icon>account_circle</mat-icon></button>
       <mat-menu #menu="matMenu">
         <button mat-menu-item *ngFor="let item of menuItems; trackBy: trackByFn" (click)="navigateToItem(item)">{{ item.name }}</button>
       </mat-menu>

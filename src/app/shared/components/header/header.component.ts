@@ -1,14 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { LoginComponent } from 'src/app/component/login/login.component';
-import { OtpComponent } from 'src/app/component/otp/otp.component';
-import { SigninComponent } from 'src/app/component/signin/signin.component';
-import { UserDetailsComponent } from 'src/app/component/user-details/user-details.component';
+import { LoginComponent } from 'src/app/client/component/login/login.component';
+import { OtpComponent } from 'src/app/client/component/otp/otp.component';
+import { SigninComponent } from 'src/app/client/component/signin/signin.component';
+import { UserDetailsComponent } from 'src/app/client/component/user-details/user-details.component';
 import { SharedService } from '../../services/shared.service';
-SharedService
-
-
 
 
 

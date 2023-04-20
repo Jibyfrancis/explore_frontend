@@ -6,22 +6,22 @@ import {
   HttpInterceptor
 } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import{environment} from '../../enviroments/environment'
+import { environment } from '../../enviroments/environment'
 
 @Injectable()
 export class InterceptorHttpInterceptor implements HttpInterceptor {
 
-  constructor() {}
+  constructor() { }
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
 
-      const commonUrl=environment.commonUrl
-      console.log({request});
-      let newRequest=request.clone({
-        url: commonUrl + request.url
-      })
+    const commonUrl = environment.commonUrl
+    console.log({ request });
+    let newRequest = request.clone({
+      url: commonUrl + request.url
+    })
 
-      return next.handle(newRequest);
-    }
+    return next.handle(newRequest);
+  }
 
 }

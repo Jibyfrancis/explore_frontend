@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { FormBuilder,Validators,FormGroup } from '@angular/forms';
 import { AuthServiceService } from 'src/app/services/auth-service.service';
+import { SharedService } from 'src/app/shared/services/shared.service';
 
 
 
@@ -15,7 +16,7 @@ export class UserDetailsComponent {
   userDetailsForm!:FormGroup
 
   constructor(public dialogRef: MatDialogRef<UserDetailsComponent>, private formBuilder:FormBuilder,
-    private authService: AuthServiceService) {
+    private authService: AuthServiceService,private sharedService: SharedService) {
     this.userDetailsForm=this.formBuilder.group({
       "userName":["",[Validators.required,Validators.pattern('^[A-Za-z]+([ ]?[A-Za-z]+)*$')]],
       "email":["",[Validators.required,Validators.email]],
@@ -30,11 +31,21 @@ export class UserDetailsComponent {
 
       this.authService.userSignupWithPhoneNumber(userData).subscribe((res:any)=>{
         console.log(res);
-        this.dialogRef.close(true)
+        const userData = {
+          token: res.data.token,
+          user: res.data.usersData
+        }
+        if (res.data && res.data.token && res.data.usersData) {
+
+          localStorage.setItem('user', JSON.stringify(userData))
+          this.sharedService.loggedInUser = res.data.usersData.userName;
+          this.sharedService.loggedInUserChanged.emit(res.data.usersData.userName);
+          this.dialogRef.close(true)
+
+        }
+
       })
     }
-
-    // this.dialogRef.close(true)
 
   }
 

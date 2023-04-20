@@ -1,6 +1,6 @@
 
 .backgroundImage {
-  background-image: url('../../../assets/images/R.jpg');
+  background-image: url('../../../../assets/images/R.jpg');
   background-size: cover;
   background-position: center;
   width: 100%;
@@ -9,9 +9,17 @@
   justify-content: center;
   align-items: center;
 }
+/* .sticky-search {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+} */
+
 
 .search-container {
   position: absolute;
+  /* top: 0; */
+  z-index: 1;
   top: 30%;
   left: 50%;
   transform: translate(-50%, -50%);

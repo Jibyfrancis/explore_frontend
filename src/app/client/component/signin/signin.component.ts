@@ -10,6 +10,7 @@ import { LoginComponent } from '../login/login.component';
 import { WindowService } from 'src/app/services/window.service';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { RecaptchaVerifier, signInWithPhoneNumber, getAuth, Auth } from '@angular/fire/auth';
+import { SharedService } from 'src/app/shared/services/shared.service';
 
 
 
@@ -49,7 +50,8 @@ export class SigninComponent implements OnInit {
     public dialog: MatDialog,
     private windowService: WindowService,
 
-    private _auth: Auth) {
+    private _auth: Auth,
+    private sharedService: SharedService) {
     this.signUpform = this.formBuilder.group({
       "countryCode": ['', Validators.required],
       "mobileNumber": ['', [Validators.required, Validators.pattern('^[0-9]*$'), Validators.minLength(10), Validators.maxLength(10)]]
@@ -71,11 +73,22 @@ export class SigninComponent implements OnInit {
 
 
   async signInWithGoogle() {
-    (await this.authService.googleSignUp()).subscribe((response: any) => {
-      console.log(response);
+    (await this.authService.googleSignUp()).subscribe((res: any) => {
+      console.log(res);
+      const userData = {
+        token: res.data.token,
+        user: res.data.isGoogleUser
+      }
+      if (res.data && res.data.token && res.data.isGoogleUser) {
 
+        localStorage.setItem('user', JSON.stringify(userData))
+        this.sharedService.loggedInUser = res.data.isGoogleUser.userName;
+        this.sharedService.loggedInUserChanged.emit(res.data.isGoogleUser.userName);
+        this.dialogRef.close()
+      }
 
     })
+
   }
 
   signInwithNumber() {

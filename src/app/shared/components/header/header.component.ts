@@ -6,9 +6,7 @@ import { OtpComponent } from 'src/app/client/component/otp/otp.component';
 import { SigninComponent } from 'src/app/client/component/signin/signin.component';
 import { UserDetailsComponent } from 'src/app/client/component/user-details/user-details.component';
 import { SharedService } from '../../services/shared.service';
-
-
-
+import { AuthServiceService } from 'src/app/services/auth-service.service';
 
 @Component({
   selector: 'app-header',
@@ -16,13 +14,11 @@ import { SharedService } from '../../services/shared.service';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
-
   menuOpen = false;
   isLoggedIn = false;
   user: any = ""
 
-
-  constructor(private router: Router, public dialog: MatDialog, private sharedService: SharedService) { }
+  constructor(private router: Router, public dialog: MatDialog, private sharedService: SharedService, private auth: AuthServiceService) { }
   ngOnInit() {
     this.sharedService.loggedInUserChanged.subscribe((user) => {
       this.isLoggedIn = true
@@ -33,19 +29,11 @@ export class HeaderComponent implements OnInit {
       if (userData !== null) {
         const userDataObj = JSON.parse(userData)
         const name = userDataObj.user.userName
-
         this.sharedService.loggedInUser = name.split(" ")[0]
-        this.user=name.split(" ")[0]
+        this.user = name.split(" ")[0]
         this.isLoggedIn = true
-        console.log(this.user);
-
       }
-
-
     }
-
-
-
   }
 
   toggleMenu() {
@@ -58,11 +46,9 @@ export class HeaderComponent implements OnInit {
       if (result === true) {
         const otpDialogRef = this.dialog.open(OtpComponent)
         otpDialogRef.afterClosed().subscribe(result => {
-          console.log('otpclosed');
           if (result === true) {
             this.dialog.open(UserDetailsComponent)
               .afterClosed().subscribe(result => {
-                console.log('userdetailsclosed');
               })
           }
         })
@@ -74,43 +60,64 @@ export class HeaderComponent implements OnInit {
   get menuItems() {
     if (this.isLoggedIn) {
       return [
-        { name: 'Log out' },
-        { name: 'Profile', link: '/profile' }
+        { name: 'Logout' },
+        { name: 'Profile' }
       ];
     }
     else {
       return [
-        { name: 'Sign up' },
-        { name: 'Log in' },
+        { name: 'Signup' },
+        { name: 'Login' },
       ];
     }
   }
 
   navigateToItem(item: any) {
-    if (item.name === 'Sign up' || item.name === 'Log in') {
+    if (item.name === 'Signup' || item.name === 'Login') {
       this.signIn()
 
-    } else {
-
-      this.router.navigate(['/items', item]);
     }
-    if(item.name==='Log out'){
+    if (item.name === 'Logout') {
       this.logout();
     }
+    if (item.name === 'Profile') {
+      this.profile()
+    }
+    // else {
+    //   this.router.navigate(['/items', item]);
+    // }
   }
 
   trackByFn(index: number, item: any) {
     return item.name;
   }
 
+  hostRequest() {
+    if (!this.user) {
+      this.signIn()
 
+    } else {
+      this.router.navigateByUrl('host-request');
+
+    }
+
+
+  }
+
+  profile() {
+    alert()
+
+
+
+  }
 
   logout() {
     localStorage.removeItem('user')
-    this.isLoggedIn=false
-    this.user=""
-
+    this.isLoggedIn = false
+    this.user = ""
+    this.router.navigateByUrl('')
   }
+
 
 }
 

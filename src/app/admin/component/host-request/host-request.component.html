@@ -1,0 +1,51 @@
+<ng-container *ngIf="length > 0; else noHosts">
+
+  <!-- table columns -->
+  <mat-table [dataSource]="hosts">
+    <!-- Column for username -->
+    <ng-container matColumnDef="fullname">
+      <mat-header-cell *matHeaderCellDef>Full Name</mat-header-cell>
+      <mat-cell *matCellDef="let host">{{host.fullName}}</mat-cell>
+    </ng-container>
+
+    <!-- Column for email -->
+    <ng-container matColumnDef="dataofbirth">
+      <mat-header-cell *matHeaderCellDef>Date of Birth</mat-header-cell>
+      <mat-cell *matCellDef="let host">{{host.dateOfBirth}}</mat-cell>
+    </ng-container>
+
+    <!-- Column for phone number -->
+    <ng-container matColumnDef="aadharnumber">
+      <mat-header-cell *matHeaderCellDef>Aadhar Number</mat-header-cell>
+      <mat-cell *matCellDef="let host">{{host.aadharNumber}}</mat-cell>
+    </ng-container>
+
+
+    <ng-container matColumnDef="pancard">
+      <mat-header-cell *matHeaderCellDef>Pancard Number</mat-header-cell>
+      <mat-cell *matCellDef="let host">{{host.pancardNumber}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="status">
+      <mat-header-cell *matHeaderCellDef>Status</mat-header-cell>
+      <mat-cell *matCellDef="let host">
+        <button mat-raised-button color="primary" (click)="approve(host.userId)">Approve</button>
+        <button mat-raised-button color="warn" (click)="reject(host.userId)">Reject</button>
+      </mat-cell>
+    </ng-container>
+
+
+    <!-- Define the columns in the table -->
+    <mat-header-row
+      *matHeaderRowDef="['fullname', 'dataofbirth', 'aadharnumber', 'pancard', 'status']"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: ['fullname', 'dataofbirth', 'aadharnumber', 'pancard','status']"></mat-row>
+
+  </mat-table>
+
+</ng-container>
+
+<ng-template #noHosts>
+  <div style="display: flex; justify-content: center; align-items: center; height: 200px;">
+    <span>No Host Request</span>
+  </div>
+</ng-template>

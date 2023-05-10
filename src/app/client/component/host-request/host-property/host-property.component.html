@@ -1,0 +1,336 @@
+<!-- <div class="container">
+  <mat-card class="card">
+    <mat-stepper linear #stepper class="height=500px">
+      <mat-step [stepControl]="propertyForm">
+        <form [formGroup]="propertyForm">
+          <div>
+            <ng-template matStepLabel>Property Information</ng-template>
+            <mat-form-field>
+              <mat-label>Name of the Property</mat-label>
+              <input matInput formControlName="name" placeholder="Enter name of the property" />
+            </mat-form-field>
+          </div>
+          <mat-form-field>
+            <mat-label>Short Description</mat-label>
+            <textarea matInput formControlName="description" placeholder="Enter short description"></textarea>
+          </mat-form-field>
+          <div>
+            <button mat-button matStepperNext>
+              Next
+            </button>
+          </div>
+        </form>
+      </mat-step>
+
+      <mat-step [stepControl]=" propertyFormGroup">
+        <ng-template matStepLabel>Property Type</ng-template>
+        <form [formGroup]=" propertyFormGroup">
+          <div>
+            <ng-template matStepLabel>Property Information</ng-template>
+            <mat-form-field>
+              <mat-label>Type</mat-label>
+              <mat-select [(value)]="selectedType" formControlName="roomType">
+                <mat-option *ngFor="let type of types" [value]="type">
+                  <img [src]="type.imageUrl" alt="{{ type.name }}" height="20px" width="20px" />
+                  {{ type.name }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <div *ngIf="selectedType">
+              <img [src]="selectedType.imageUrl" alt="{{ selectedType.name }}" height="50px" width="50px" />
+
+            </div>
+          </div>
+          <mat-form-field>
+            <input matInput type="text" (input)="search($event)" [(ngModel)]="selectedAddress"
+              [ngModelOptions]="{ standalone: true }" placeholder="Enter Location" />
+          </mat-form-field>
+
+          <mat-list *ngIf="addresses.length > 0">
+            <mat-list-item *ngFor="let address of addresses" (click)="onSelect(address)">
+              <mat-icon>place</mat-icon>
+              <span>{{ address }}</span>
+            </mat-list-item>
+          </mat-list>
+
+          <mat-form-field>
+            <mat-label>Price per Night</mat-label>
+            <input matInput formControlName="price" placeholder="Price per Night" />
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Maximum number of Guest</mat-label>
+            <input matInput formControlName="guest" placeholder="Maximum number of Guest" />
+          </mat-form-field>
+
+          <div class="options">
+            <mat-form-field appearance="fill" class="facility">
+              <mat-label>Bedrooms</mat-label>
+              <mat-select>
+                <mat-option *ngFor="let num of [1, 2, 3, 4, 5]" [value]="num">
+                  {{ num }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="fill" class="facility">
+              <mat-label>Bathrooms</mat-label>
+              <mat-select>
+                <mat-option *ngFor="let num of [1, 2, 3, 4, 5]" [value]="num">
+                  {{ num }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="fill" class="facility">
+              <mat-label>Kitchen</mat-label>
+              <mat-select>
+                <mat-option *ngFor="let num of [1, 2, 3, 4, 5]" [value]="num">
+                  {{ num }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="fill" class="facility">
+              <mat-label>Balcony</mat-label>
+              <mat-select>
+                <mat-option *ngFor="let num of [1, 2, 3, 4, 5]" [value]="num">
+                  {{ num }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </form>
+        <div>
+          <button mat-button matStepperPrevious>Back</button>
+          <button mat-button matStepperNext (click)="onNext(selectedType?._id)">
+            Next
+          </button>
+        </div>
+      </mat-step>
+
+      <mat-step [stepControl]="thirdFormGroup">
+        <ng-template matStepLabel>Amenities Available</ng-template>
+        <div class="card-container">
+          <mat-card class="example-card" *ngFor="let amenity of amenities">
+            <mat-card-header>
+              <mat-card-title-group>
+                <img mat-card-image src="{{ amenity.imageUrl }}" height="50px" width="50px" />
+              </mat-card-title-group>
+            </mat-card-header>
+            <mat-card-content>
+              <mat-checkbox formControlName="{{ amenity._id }}">{{
+                amenity.name
+                }}</mat-checkbox>
+            </mat-card-content>
+          </mat-card>
+        </div>
+        <div>
+          <button mat-button matStepperPrevious>Back</button>
+          <button mat-button matStepperNext >Next</button>
+        </div>
+      </mat-step>
+
+      <mat-step>
+        <ng-template matStepLabel>Add Photos</ng-template>
+        <div *ngIf="photoFormGroup?.get('photos')?.value?.length">
+          <div style="display: flex; flex-wrap: wrap;">
+            <div *ngFor="let photo of photoFormGroup?.get('photos')?.value" style="flex: 1;">
+              <img [src]="photo" height="100">
+            </div>
+          </div>
+        </div>
+        <form [formGroup]="photoFormGroup" enctype="multipart/form-data">
+          <input type="file" multiple formControlName="photos" accept="image/*" (change)="onFileChange($event)">
+        </form>
+
+        <div>
+          <button mat-button matStepperPrevious>Back</button>
+          <button mat-button matStepperNexton (click)="submit()">Submit</button>
+        </div>
+      </mat-step>
+      <mat-step>
+        <ng-template matStepLabel>Done</ng-template>
+        <p>You are now done.</p>
+        <div>
+
+          <button mat-button (click)="stepper.reset()">List Another One</button>
+        </div>
+      </mat-step>
+    </mat-stepper>
+  </mat-card>
+</div> -->
+<div  class="container">
+<mat-card class="card">
+  <mat-stepper linear #stepper class="height=500px">
+
+    <form [formGroup]="photoFormGroup" enctype="multipart/form-data">
+      <form [formGroup]="propertyForm">
+        <mat-step [stepControl]="propertyForm">
+          <ng-template matStepLabel>Property Information</ng-template>
+          <mat-form-field>
+            <mat-label>Name of the Property</mat-label>
+            <input matInput formControlName="name" placeholder="Enter name of the property" required />
+            <mat-error *ngIf="propertyForm.get('name')?.hasError('required')">Name is required</mat-error>
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Short Description</mat-label>
+            <textarea matInput formControlName="description" placeholder="Enter short description" required></textarea>
+            <mat-error *ngIf="propertyForm.get('description')?.hasError('required')">Description is required</mat-error>
+          </mat-form-field>
+          <div>
+            <button mat-button type="submit" matStepperNext>Next</button>
+          </div>
+        </mat-step>
+      </form>
+
+      <form [formGroup]="propertyFormGroup">
+        <mat-step [stepControl]="propertyFormGroup">
+          <ng-template matStepLabel>Property Type</ng-template>
+
+          <div>
+            <ng-template matStepLabel>Property Information</ng-template>
+            <mat-form-field>
+              <mat-label>Type</mat-label>
+              <mat-select (value)="selectedType._id" formControlName="roomType">
+                <mat-option *ngFor="let type of propertyTypes" [value]="type.name">
+                  <img [src]="type.imageUrl" alt="{{ type.name }}" height="20px" width="20px" />
+                  {{ type.name }}
+                </mat-option>
+              </mat-select>
+              <mat-error *ngIf="propertyFormGroup.get('roomType')?.hasError('required')">Roomtype is
+                required</mat-error>
+            </mat-form-field>
+            <!-- <mat-form-field>
+              <mat-label>Type</mat-label>
+              <mat-select (valueChange)="propertyFormGroup.get('roomType')?.setValue($event)" formControlName="roomType">
+
+                <mat-option *ngFor="let type of propertyTypes" [value]="type.name">
+                  <img [src]="type.imageUrl" alt="{{ type.name }}" height="20px" width="20px" />
+                  {{ type.name }}
+                </mat-option>
+              </mat-select>
+              <mat-error *ngIf="propertyFormGroup.get('roomType')?.hasError('required')">Roomtype is required</mat-error>
+            </mat-form-field> -->
+
+
+            <div *ngIf="selectedType">
+              <img [src]="selectedType.imageUrl" alt="{{ selectedType.name }}" height="50px" width="50px" />
+            </div>
+          </div>
+          <mat-form-field>
+            <input matInput type="text" (input)="search($event)" [(ngModel)]="selectedAddress"
+              [ngModelOptions]="{ standalone: true }" placeholder="Enter Location" required="location" />
+            <mat-error *ngIf="propertyFormGroup.get('location')?.hasError('required')">Location is required</mat-error>
+          </mat-form-field>
+
+          <mat-list *ngIf="addresses.length > 0">
+            <mat-list-item *ngFor="let address of addresses" (click)="onSelect(address)">
+              <mat-icon>place</mat-icon>
+              <span>{{ address }}</span>
+            </mat-list-item>
+          </mat-list>
+
+          <mat-form-field>
+            <mat-label>Price per Night</mat-label>
+            <input matInput formControlName="price" placeholder="Price per Night" />
+            <mat-error *ngIf="propertyFormGroup.get('price')?.hasError('required')">Price is required</mat-error>
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Maximum number of Guest</mat-label>
+            <input matInput formControlName="guest" placeholder="Maximum number of Guest" />
+            <mat-error *ngIf="propertyFormGroup.get('guest')?.hasError('required')">Guest is required</mat-error>
+          </mat-form-field>
+
+          <div class="options">
+            <mat-form-field appearance="fill" class="facility">
+              <mat-label>Bedrooms</mat-label>
+              <mat-select formControlName="bedroom">
+                <mat-option *ngFor="let num of [1, 2, 3, 4, 5]" [value]="num">
+                  {{ num }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="fill" class="facility">
+              <mat-label>Bathrooms</mat-label>
+              <mat-select formControlName="bathrooms">
+                <mat-option *ngFor="let num of [1, 2, 3, 4, 5]" [value]="num">
+                  {{ num }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="fill" class="facility">
+              <mat-label>Kitchen</mat-label>
+              <mat-select formControlName="kitchen">
+                <mat-option *ngFor="let num of [1, 2, 3, 4, 5]" [value]="num">
+                  {{ num }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="fill" class="facility">
+              <mat-label>Balcony</mat-label>
+              <mat-select formControlName="balcony">
+                <mat-option *ngFor="let num of [1, 2, 3, 4, 5]" [value]="num">
+                  {{ num }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+
+          <div>
+            <button mat-button matStepperPrevious>Back</button>
+            <button mat-button matStepperNext>
+              Next
+            </button>
+          </div>
+        </mat-step>
+      </form>
+
+      <mat-step [stepControl]="amenityFormGroup">
+        <ng-template matStepLabel>Amenities Available</ng-template>
+        <div class="card-container">
+          <mat-card class="example-card" *ngFor="let amenity of amenities">
+            <mat-card-header>
+              <mat-card-title-group>
+                <img mat-card-image src="{{ amenity.imageUrl }}" height="50px" width="50px" />
+              </mat-card-title-group>
+            </mat-card-header>
+            <mat-card-content>
+              <mat-checkbox (change)="onAmenityChange($event, amenity._id)">{{
+                amenity.name }}</mat-checkbox>
+            </mat-card-content>
+          </mat-card>
+        </div>
+        <div>
+          <button mat-button matStepperPrevious>Back</button>
+          <button mat-button matStepperNext (click)="one()">Next</button>
+        </div>
+      </mat-step>
+
+
+      <mat-step [stepControl]="photoFormGroup">
+        <ng-template matStepLabel>Add Photos</ng-template>
+        <div *ngIf="photoFormGroup?.get('photos')?.value?.length">
+          <div style="display: flex; flex-wrap: wrap">
+            <div *ngFor="let photo of imageUrls" style="flex: 1">
+              <img [src]="photo" height="50" />
+            </div>
+          </div>
+        </div>
+        <input type="file" multiple formControlName="photos" accept="image/*" (change)="onFileChange($event)" />
+        <mat-error *ngIf="photoFormGroup.get('photos')?.hasError('required')">Select atleast 5 images</mat-error>
+        <mat-error *ngIf="photoFormGroup.get('photos')?.hasError('minlength')">Select atleast 5 images</mat-error>
+        <div>
+          <button mat-button matStepperPrevious>Back</button>
+          <button mat-button matStepperNext (click)="submit(); ">Submit</button>
+        </div>
+      </mat-step>
+
+    </form>
+    <mat-step >
+      <ng-template matStepLabel>Done</ng-template>
+      <p>You are now done.</p>
+      <div>
+
+        <button mat-button (click)="stepper.reset()">List Another One</button>
+      </div>
+    </mat-step>
+  </mat-stepper>
+</mat-card>
+</div>

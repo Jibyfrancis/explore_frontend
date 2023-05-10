@@ -1,0 +1,31 @@
+.container {
+  max-width: 300px;
+  margin: 0 auto;
+  padding: 20px;
+  /* background-color: #13121269; */
+  border-radius: 5px;
+}
+
+
+
+.inpdddut[type="file"] {
+  padding: 10px;
+  margin-bottom: 20px;
+  border: none;
+  background-color: #9bb1ee;
+  border-radius: 5px;
+  width: 70%;
+  cursor: pointer;
+}
+
+
+    
+.name-field {
+  margin-bottom: 20px;
+}
+
+
+.name-field input:focus {
+  outline: none;
+  border-color: #1aa3bb;
+}

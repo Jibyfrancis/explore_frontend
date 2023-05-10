@@ -9,7 +9,7 @@ mat-toolbar {
 }
 
 .spacer {
-  flex: 1 1 auto;
+flex: 2 1 auto;
 }
 
 .mat-toolbar-row{
@@ -20,4 +20,7 @@ mat-toolbar {
 .mat-button-space {
   margin-left: 10px;
   margin-right: 10px;
+}
+.cdk-overlay-pane{
+  margin-top: 5px;
 }

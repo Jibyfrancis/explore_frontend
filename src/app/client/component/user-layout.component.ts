@@ -4,7 +4,7 @@ import { Component } from '@angular/core';
   selector: 'app-user-layout',
   template: `
     <app-header></app-header>
-    <div class="content">
+    <div class="content" style="padding-top: 4rem;">
       <router-outlet></router-outlet>
     </div>
   `,

@@ -7,9 +7,12 @@ import { AdminNavComponent } from './component/admin-nav/admin-nav.component';
 import { AdminloginComponent } from './component/adminlogin/adminlogin.component';
 import { AdminLayoutComponent } from './component/layout/adminlayout.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-
-
-
+import { UserManagementComponent } from './component/user-management/user-management.component';
+import { HostRequestComponent } from './component/host-request/host-request.component';
+import { AmenitiesComponent } from './component/amenities/amenities.component';
+import { AddAmenityComponent } from './component/amenities/add-amenity/add-amenity.component';
+import { PropertyTypeComponent } from './component/property-type/property-type.component';
+import { AddPropertyComponent } from './component/property-type/add-property/add-property.component';
 
 
 
@@ -19,7 +22,13 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
     AdminloginComponent,
     DashboardComponent,
     AdminNavComponent,
-    AdminLayoutComponent
+    AdminLayoutComponent,
+    UserManagementComponent,
+    HostRequestComponent,
+    AmenitiesComponent,
+    AddAmenityComponent,
+    PropertyTypeComponent,
+    AddPropertyComponent
 
   ],
   imports: [
@@ -27,8 +36,11 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
     AdminRoutingModule,
     MaterialModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
 
-  ]
+  ],
+
+
+
 })
-export class AdminModule { }
+export class AdminModule {}

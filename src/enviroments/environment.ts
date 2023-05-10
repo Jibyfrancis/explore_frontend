@@ -11,5 +11,10 @@ firebaseConfig : {
   measurementId: "G-H1SETXL62P"
 },
 
-commonUrl:'http://localhost:4000/auth/'
+commonUrl:'http://localhost:4000/',
+
+mapbox:{
+  accessToken:'pk.eyJ1IjoiamlieWZyYW5jaXMiLCJhIjoiY2xoODIwNno5MDB5aTN0bnpseHhwMTYzZSJ9.n1PWjSOH8cKuLO3lwGjibg'
+}
+
 }

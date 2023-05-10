@@ -1,0 +1,50 @@
+
+<div class="container">
+  <div class="imagediv">
+    <img style="width: 100%" src="../../../../assets/images/bg1.jpg" alt="" />
+  </div>
+
+  <div class="form-box">
+    <div *ngIf="user.hostingRequest && !user.isHosted ">
+      <h1>Successfully submitted</h1>
+      <p>
+        Your request has been submitted and is being processed.
+
+      </p>
+      <button mat-raised-button color="primary" routerLink="">Back to Home</button>
+    </div>
+
+    <div *ngIf="user.hostingRequest && user.isHosted">
+      <h1>Congratulations</h1>
+      <p>
+        Your request has been verified
+      </p>
+      <button mat-raised-button color="primary" routerLink="/list-property">Proceed to listing</button>
+    </div>
+
+    <mat-card class="form" *ngIf="!user.hostingRequest">
+      <form class="form-container" [formGroup]="hostrDetailsForm" (ngSubmit)="submit()">
+        <mat-form-field appearance="fill" class="input">
+          <mat-label>Enter Full Name</mat-label>
+          <input matInput type="text" formControlName="fullName" />
+        </mat-form-field>
+        <mat-form-field appearance="fill" class="input">
+          <mat-label>Date Of Birth</mat-label>
+          <input matInput type="date" formControlName="dataOfBirth" />
+        </mat-form-field>
+        <mat-form-field appearance="fill" class="input">
+          <mat-label>Aadhar Number</mat-label>
+          <input matInput type="text" formControlName="aadharNumber" />
+        </mat-form-field>
+        <mat-form-field appearance="fill" class="input">
+          <mat-label>Pan Card</mat-label>
+          <input matInput type="text" formControlName="panCardNumber" />
+        </mat-form-field>
+        <button mat-raised-button color="primary" [disabled]="hostingApproval">
+          {{ hostingApproval ? "Request Send" : "Submit" }}
+        </button>
+      </form>
+    </mat-card>
+  </div>
+</div>
+

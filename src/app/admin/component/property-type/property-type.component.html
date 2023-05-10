@@ -1,0 +1,37 @@
+<!-- <router-outlet></router-outlet> -->
+<ng-container >
+  <div class="row" style="padding-top: 1rem;">
+    <div style="display: flex; justify-content:flex-end ;">
+      <button mat-raised-button routerLink="/admin/dashboard/add-property-type">Add Property Type</button>
+    </div>
+  </div>
+</ng-container>
+<!-- <mat-spinner *ngIf="showSpinner "></mat-spinner> -->
+<mat-table [dataSource]="propertyType" >
+
+  <!-- Column for username -->
+  <ng-container matColumnDef="fullname">
+    <mat-spinner [diameter]="50" *ngIf="showSpinner "></mat-spinner>
+    <mat-header-cell *matHeaderCellDef>Image</mat-header-cell>
+    <mat-cell *matCellDef="let amenity"><img src="{{amenity.imageUrl}}" style="height: 60px; width: 60px;" (load)="showSpinner=false"></mat-cell>
+  </ng-container>
+
+  <!-- Column for email -->
+  <ng-container matColumnDef="dataofbirth">
+    <mat-header-cell *matHeaderCellDef>Name</mat-header-cell>
+    <mat-cell *matCellDef="let amenity">{{amenity.name}}</mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="status">
+    <mat-header-cell *matHeaderCellDef>Status</mat-header-cell>
+    <mat-cell *matCellDef="let amenity">
+      <button mat-raised-button color="warn" (click)="Remove(amenity.id)">Delete</button>
+    </mat-cell>
+  </ng-container>
+
+
+  <!-- Define the columns in the table -->
+  <mat-header-row *matHeaderRowDef="['fullname', 'dataofbirth', 'status', ]"></mat-header-row>
+  <mat-row *matRowDef="let row; columns: ['fullname', 'dataofbirth', 'status',]"></mat-row>
+
+</mat-table>

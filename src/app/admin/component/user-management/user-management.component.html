@@ -1,0 +1,45 @@
+<mat-table [dataSource]="users">
+
+  <!-- Column for username -->
+  <ng-container matColumnDef="username">
+    <mat-header-cell *matHeaderCellDef>User Name</mat-header-cell>
+    <mat-cell *matCellDef="let user">{{user.username}}</mat-cell>
+  </ng-container>
+
+  <!-- Column for email -->
+  <ng-container matColumnDef="email">
+    <mat-header-cell *matHeaderCellDef>Email</mat-header-cell>
+    <mat-cell *matCellDef="let user">{{user.email}}</mat-cell>
+  </ng-container>
+
+  <!-- Column for phone number -->
+  <ng-container matColumnDef="phone">
+    <mat-header-cell *matHeaderCellDef>Phone Number</mat-header-cell>
+    <mat-cell *matCellDef="let user">{{user.phone}}</mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="host">
+    <mat-header-cell *matHeaderCellDef>Host</mat-header-cell>
+
+    <mat-cell *matCellDef="let user">
+      <mat-icon color="{{user.isHosted ? 'primary' : 'warn'}}">
+        {{user.isHosted ? 'check_circle' : 'cancel'}}
+      </mat-icon>
+    </mat-cell>
+  </ng-container>
+
+
+  <ng-container matColumnDef="status">
+    <mat-header-cell *matHeaderCellDef>Block/Unblock</mat-header-cell>
+    <mat-cell *matCellDef="let user">
+      <mat-slide-toggle [(ngModel)]="user.status" (change)="updateUserStatus(user.id,user.status)"
+        [checked]="![user.status]"></mat-slide-toggle>
+    </mat-cell>
+  </ng-container>
+
+
+  <!-- Define the columns in the table -->
+  <mat-header-row *matHeaderRowDef="['username', 'email', 'phone', 'host', 'status']"></mat-header-row>
+  <mat-row *matRowDef="let row; columns: ['username', 'email', 'phone','host', 'status']"></mat-row>
+
+</mat-table>

@@ -35,8 +35,6 @@ export class AddPropertyComponent {
       const formData = new FormData();
       formData.append('name', this.propertyType.get('name')?.value);
       formData.append('image', this.propertyType.get('image')?.value);
-      console.log(formData);
-
       this.adminServices.addPropertyType(formData).subscribe((res: any) => {
         if (res.status === 'Success') {
           this.propertyType.reset();
@@ -45,10 +43,9 @@ export class AddPropertyComponent {
           this.snackbarMessage = 'Amenity added successfully!';
           this.openSnackBar(this.snackbarMessage, this.snackbarValue);
         }
-        console.log(res);
       });
     }
-    console.log(this.propertyType);
+
   }
 
   onFileSelected(event: any) {

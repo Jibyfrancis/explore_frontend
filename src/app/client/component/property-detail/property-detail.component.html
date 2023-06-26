@@ -1,0 +1,173 @@
+<!-- waiting div -->
+<div class="waiting"  *ngIf="paymentresponse">
+
+  <svg class="pl" width="240" height="240" viewBox="0 0 240 240">
+    <circle class="pl__ring pl__ring--a" cx="120" cy="120" r="105" fill="none" stroke="#000" stroke-width="20"
+      stroke-dasharray="0 660" stroke-dashoffset="-330" stroke-linecap="round"></circle>
+    <circle class="pl__ring pl__ring--b" cx="120" cy="120" r="35" fill="none" stroke="#000" stroke-width="20"
+      stroke-dasharray="0 220" stroke-dashoffset="-110" stroke-linecap="round"></circle>
+    <circle class="pl__ring pl__ring--c" cx="85" cy="120" r="70" fill="none" stroke="#000" stroke-width="20"
+      stroke-dasharray="0 440" stroke-linecap="round"></circle>
+    <circle class="pl__ring pl__ring--d" cx="155" cy="120" r="70" fill="none" stroke="#000" stroke-width="20"
+      stroke-dasharray="0 440" stroke-linecap="round"></circle>
+  </svg>
+</div>
+<!-- waiting div -->
+<div class="container">
+  <div class="" style="padding-top: 16px">
+    <h1>
+      {{properties.name}}
+    </h1>
+    <h6>
+      <mat-icon>location_on</mat-icon>{{properties.address.address}}
+    </h6>
+    <div style="background-color: rgb(255, 255, 255)">
+
+      <div class="image-grid">
+
+        <img *ngFor="let imageUrl of properties.imageUrl" [src]="imageUrl" alt="" height="200" width="400" />
+
+      </div>
+    </div>
+  </div>
+  <div class="host">
+    <h1>
+      <mat-icon>account_circle</mat-icon>Farm house hosted by{{properties.user[0].userName}}
+    </h1>
+  </div>
+
+  <div class="details">
+    <div class="divide" style="padding: 5px;">
+      <div class="left">
+        <div>
+          <h6>Facilities</h6>
+        </div>
+        <div class="fecility">
+          <p><fa-icon [icon]="bedrooms"></fa-icon> {{properties.bedroom}} Bedroom</p>
+          <p> <fa-icon [icon]="bathroom"></fa-icon> {{properties.bathrooms}} Bathroom</p>
+          <p> <fa-icon [icon]="kitchen"></fa-icon> {{properties.kitchen}} Kitchen</p>
+          <p><fa-icon [icon]="bedrooms"></fa-icon> {{properties.balcony}} Balcony</p>
+        </div>
+        <div class="about">
+          <h6>About</h6>
+          <p style="text-align: justify;">
+            {{properties.description}}
+          </p>
+        </div>
+        <div>
+          <h6>Available Amenities</h6>
+        </div>
+        <div class="amenity" *ngFor="let amenity of properties['amenity-details']">
+          <img [src]="amenity.imageUrl" height="30" width="30" alt="{{ amenity.name }}"><span> {{ amenity.name }}</span>
+        </div>
+        <br>
+      </div>
+
+      <div class="right">
+
+        <div class="card">
+          <mat-card style="width: 400px; padding: 20px; height: 600x;">
+            <div class="price">
+              <h6>₹ {{properties.price}} night</h6>
+            </div>
+            <div class="date">
+              <div class="checkin">
+                <mat-form-field>
+                  <mat-label>From</mat-label>
+                  <input matInput [matDatepicker]="dp" [(ngModel)]="checkIn" [min]="currentDate">
+                  <mat-datepicker-toggle matIconSuffix [for]="dp"></mat-datepicker-toggle>
+                  <mat-datepicker #dp></mat-datepicker>
+                </mat-form-field>
+
+              </div>
+              <div class="checkout">
+                <mat-form-field>
+                  <mat-label>To</mat-label>
+                  <input matInput [matDatepicker]="dp1" [(ngModel)]="checkOut" (dateChange)="onCheckoutDateChange()"
+                    [min]="currentDate">
+                  <mat-datepicker-toggle matIconSuffix [for]="dp1"></mat-datepicker-toggle>
+                  <mat-datepicker #dp1></mat-datepicker>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="guest">
+              <div class="adult">
+                <p>Maxmium Guest allowed {{properties.guest}}</p>
+                <p *ngIf="message" style="color: brown;">Can not Accomedate morethan Maxmium Guest allowed </p>
+              </div>
+            </div>
+
+            <div class="guest">
+              <div class="adult">
+                <p>Adult</p>
+              </div>
+              <div class="count-container">
+                <div class="btn">
+                  <button mat-mini-fab color="none" aria-label="Example icon button with a menu icon"
+                    (click)="inc('adult')" [disabled]="dissable">
+                    <span>+</span>
+                  </button>
+
+                </div>
+                <div class="count">{{adult}}</div>
+                <div class="btn">
+                  <button mat-mini-fab color="none" aria-label="Example icon button with a menu icon"
+                    (click)="dec('adult')" [disabled]="adult<=0">
+                    <span>-</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+            <br>
+
+            <div class="children">
+
+              <div class="child">
+                <p>children (above age 10)</p>
+              </div>
+              <div class="count-container">
+
+                <div class="btn">
+                  <button mat-mini-fab color="none" aria-label="Example icon button with a menu icon"
+                    (click)="inc('child')" [disabled]="dissable">
+                    <span>+</span>
+                  </button>
+
+                </div>
+                <div class="count">{{children}}</div>
+                <div class="btn">
+                  <button mat-mini-fab color="none" aria-label="Example icon button with a menu icon"
+                    (click)="dec('child')" [disabled]="children<=0">
+                    <span>-</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+            <br>
+            <button mat-raised-button color="primary" (click)="onCheckOut()"> {{ loggedIn ? 'Reserve' : 'Please Login' }} </button>
+            <br>
+            <div class="pernight">
+              <div class="night">₹ {{properties.price}} x {{nights}} nights</div>
+            </div>
+            <div class="total">
+              <div class="child">
+                <h6>Total</h6>
+              </div>
+              <div class="rate">
+                <!-- <h6>₹ {{properties.price}}??:{{totalPrice}}</h6> -->
+                <h6>₹ {{totalPrice || properties.price}}</h6>
+              </div>
+            </div>
+          </mat-card>
+
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+
+
+
+</div>

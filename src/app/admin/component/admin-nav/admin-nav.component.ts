@@ -23,7 +23,7 @@ export class AdminNavComponent {
 
   logout(){
     localStorage.removeItem('admin')
-    this.route.navigate(['/admin'])
+    this.route.navigate(['/admin/login'])
 
   }
 }

@@ -1,11 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
+import { MatStepper } from '@angular/material/stepper';
 import { AdminService } from 'src/app/admin/services/admin.service';
 import { UserService } from 'src/app/client/services/user.service';
 import {
   MapboxServiceService,
   Feature,
 } from 'src/app/services/mapbox-service.service';
+import { faUpload } from '@fortawesome/free-solid-svg-icons';
+
 
 export interface Amenity {
   _id: string;
@@ -24,7 +27,10 @@ export interface Type {
   styleUrls: ['./host-property.component.css'],
 })
 export class HostPropertyComponent implements OnInit {
-  currentUserId: string=''
+  @ViewChild(MatStepper)
+  stepper!: MatStepper;
+  upload= faUpload
+  currentUserId: string = ''
   propertyTypes!: Type[];
   amenities!: Amenity[];
   selectedAmenity: any;
@@ -32,8 +38,8 @@ export class HostPropertyComponent implements OnInit {
   selectedAddress!: string;
   selectedType!: Type;
   photoFormGroup!: FormGroup;
-  propertyForm!:FormGroup
-  propertyFormGroup!:FormGroup;
+  propertyForm!: FormGroup
+  propertyFormGroup!: FormGroup;
   selectedAmenities: any[] = [];
   geometry: any;
   lat!: any;
@@ -49,12 +55,9 @@ export class HostPropertyComponent implements OnInit {
   ) {
     this.photoFormGroup = this._formBuilder.group({
       amenities: [this.selectedAmenities],
-      photos:[ this.photoUrls, ],
+      photos: [this.photoUrls,],
     });
-    // this.photoFormGroup = this._formBuilder.group({
-    //   amenities: [this.selectedAmenities],
-    //   photos:[ null, [Validators.required, Validators.minLength(5)]],
-    // });
+
   }
 
 
@@ -65,7 +68,7 @@ export class HostPropertyComponent implements OnInit {
     if (data) {
       const userData = JSON.parse(data);
       const userId = userData?.user._id;
-      this.currentUserId=userId
+      this.currentUserId = userId
     }
     this.adminService.getAllAmenity().subscribe((res: any) => {
       console.log(res);
@@ -88,10 +91,10 @@ export class HostPropertyComponent implements OnInit {
 
     this.propertyFormGroup = this._formBuilder.group({
       roomType: ['',],
-      address:[this.selectedAddress],
+      address: [this.selectedAddress],
       location: [
         { lat: this.lat, long: this.long },
-       ],
+      ],
       price: ['',],
       guest: ['',],
       bedroom: ['',],
@@ -170,7 +173,7 @@ export class HostPropertyComponent implements OnInit {
     console.log(address);
     this.selectedAddress = address;
     this.propertyFormGroup.get('address')?.setValue({
-      address:this.selectedAddress
+      address: this.selectedAddress
     })
     console.log(this.lat, this.long);
     this.addresses = [];
@@ -206,13 +209,10 @@ export class HostPropertyComponent implements OnInit {
       'description',
       this.propertyForm.get('description')?.value
     );
-    formData.append('roomType',JSON.stringify( this.propertyFormGroup.get('roomType')?.value));
-    // formData.append(
-    //   'location',
-    //   JSON.stringify(  {lat:this.lat,  long:this.long })
-    // );
+    formData.append('roomType', JSON.stringify(this.propertyFormGroup.get('roomType')?.value));
+
     formData.append('location', JSON.stringify(this.propertyFormGroup.get('location')?.value));
-    formData.append('address',JSON.stringify(this.propertyFormGroup.get('address')?.value))
+    formData.append('address', JSON.stringify(this.propertyFormGroup.get('address')?.value))
     formData.append('price', this.propertyFormGroup.get('price')?.value);
     formData.append('guest', this.propertyFormGroup.get('guest')?.value);
     formData.append('bedroom', this.propertyFormGroup.get('bedroom')?.value);
@@ -220,18 +220,21 @@ export class HostPropertyComponent implements OnInit {
     formData.append('kitchen', this.propertyFormGroup.get('kitchen')?.value);
     formData.append('balcony', this.propertyFormGroup.get('balcony')?.value);
     formData.append('amenities', JSON.stringify(this.selectedAmenities));
-    formData.append('userId',this.currentUserId)
+    formData.append('userId', this.currentUserId)
 
     const photos = this.photoUrls
     for (let i = 0; i < photos.length; i++) {
       formData.append('photos', photos[i]);
     }
-    // console.log(photos);
-
-
 
     this.userService.createList(formData).subscribe((res) => {
-      this.photoUrls=[]
+      this.photoUrls = []
+      this.imageUrls = [];
+      this.selectedAmenities = [];
+      this.addresses = [];
+
+
+      // this.stepper.reset()
       console.log(res);
     });
   }

@@ -13,6 +13,8 @@ import { AmenitiesComponent } from './component/amenities/amenities.component';
 import { AddAmenityComponent } from './component/amenities/add-amenity/add-amenity.component';
 import { PropertyTypeComponent } from './component/property-type/property-type.component';
 import { AddPropertyComponent } from './component/property-type/add-property/add-property.component';
+import { ListedPropertyComponent } from './component/listed-property/listed-property.component';
+import { AdminComponent } from './admin.component';
 
 
 
@@ -28,7 +30,9 @@ import { AddPropertyComponent } from './component/property-type/add-property/add
     AmenitiesComponent,
     AddAmenityComponent,
     PropertyTypeComponent,
-    AddPropertyComponent
+    AddPropertyComponent,
+    ListedPropertyComponent,
+    AdminComponent
 
   ],
   imports: [

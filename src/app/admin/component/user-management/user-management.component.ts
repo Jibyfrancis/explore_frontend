@@ -47,7 +47,6 @@ export class UserManagementComponent implements OnInit {
   }
   updateUserStatus(id:any,status:any){
     this.adminService.changeUserStatus(id,status).subscribe((res)=>{
-      console.log(res);
 
     })
 

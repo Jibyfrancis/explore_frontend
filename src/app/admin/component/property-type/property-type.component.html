@@ -2,30 +2,30 @@
 <ng-container >
   <div class="row" style="padding-top: 1rem;">
     <div style="display: flex; justify-content:flex-end ;">
-      <button mat-raised-button routerLink="/admin/dashboard/add-property-type">Add Property Type</button>
+      <button mat-raised-button routerLink="/admin/add-property-type">Add Property Type</button>
     </div>
   </div>
 </ng-container>
 <!-- <mat-spinner *ngIf="showSpinner "></mat-spinner> -->
-<mat-table [dataSource]="propertyType" >
+<mat-table [dataSource]="propertyTypes" >
 
   <!-- Column for username -->
   <ng-container matColumnDef="fullname">
     <mat-spinner [diameter]="50" *ngIf="showSpinner "></mat-spinner>
     <mat-header-cell *matHeaderCellDef>Image</mat-header-cell>
-    <mat-cell *matCellDef="let amenity"><img src="{{amenity.imageUrl}}" style="height: 60px; width: 60px;" (load)="showSpinner=false"></mat-cell>
+    <mat-cell *matCellDef="let property"><img src="{{property.imageUrl}}" style="height: 60px; width: 60px;" (load)="showSpinner=false"></mat-cell>
   </ng-container>
 
   <!-- Column for email -->
   <ng-container matColumnDef="dataofbirth">
     <mat-header-cell *matHeaderCellDef>Name</mat-header-cell>
-    <mat-cell *matCellDef="let amenity">{{amenity.name}}</mat-cell>
+    <mat-cell *matCellDef="let property">{{property.name}}</mat-cell>
   </ng-container>
 
   <ng-container matColumnDef="status">
     <mat-header-cell *matHeaderCellDef>Status</mat-header-cell>
-    <mat-cell *matCellDef="let amenity">
-      <button mat-raised-button color="warn" (click)="Remove(amenity.id)">Delete</button>
+    <mat-cell *matCellDef="let property">
+      <button mat-raised-button color="warn" (click)="Remove(property)">Delete</button>
     </mat-cell>
   </ng-container>
 

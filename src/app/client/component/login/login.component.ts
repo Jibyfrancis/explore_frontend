@@ -11,6 +11,7 @@ import { SharedService } from 'src/app/shared/services/shared.service';
 })
 export class LoginComponent {
   loginForm!: FormGroup;
+  errorMessage!: string
   constructor(
     public dialogRef: MatDialogRef<LoginComponent>,
     private formBuilder: FormBuilder,
@@ -20,23 +21,30 @@ export class LoginComponent {
     this.loginForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
+
     });
   }
 
   submit() {
-    console.log(this.loginForm.value);
-    const data = this.loginForm.value;
-    this.authService.userLogin(data).subscribe((res) => {
-      const userData = {
-        token: res.data.token,
-        user: res.data.user,
-      };
-      if (res.data && res.data.token && res.data.user) {
-        localStorage.setItem('user', JSON.stringify(userData));
-        this.sharedService.loggedInUser = res.data.user.userName;
-        this.sharedService.loggedInUserChanged.emit(res.data.user.userName);
-        this.dialogRef.close();
-      }
-    });
+    if (this.loginForm.valid) {
+      const data = this.loginForm.value;
+      this.authService.userLogin(data).subscribe((res) => {
+
+        const userData = {
+          token: res.data.token,
+          user: res.data.user,
+        };
+        if (res.data && res.data.token && res.data.user) {
+          localStorage.setItem('user', JSON.stringify(userData));
+          this.sharedService.loggedInUser = res.data.user.userName;
+          this.sharedService.loggedInUserChanged.emit(res.data.user.userName);
+          this.dialogRef.close();
+        }
+      }, (error) => {
+        console.log(error);
+        this.errorMessage=error.error.message
+      });
+
+    }
   }
 }

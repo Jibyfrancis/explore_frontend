@@ -4,11 +4,16 @@
       <mat-form-field appearance="fill" class="input">
         <mat-label>Email</mat-label>
         <input matInput type="email" formControlName="email">
+        <mat-error></mat-error>
       </mat-form-field>
       <mat-form-field appearance="fill" class="input">
         <mat-label>Password</mat-label>
         <input matInput type="password" formControlName="password">
+        <mat-error *ngIf="loginForm. get('password')?.hasError('minlength')">Should have 8 letters</mat-error>
+        <mat-error *ngIf="loginForm. get('password')?.hasError('required')">Password required</mat-error>
+
       </mat-form-field>
+      <div style="color: red;">{{errorMessage}}</div>
       <button mat-raised-button color="primary">Login</button>
     </form>
   </mat-card>

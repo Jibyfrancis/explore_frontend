@@ -55,7 +55,7 @@ export class AdminService {
 
   removeAmenity(id:string):Observable<any>{
     console.log(id);
-    
+
     return this._http.delete(`admin/removeAmenity/${id}`)
   }
 
@@ -65,5 +65,9 @@ export class AdminService {
 
   getAllPropertyType(){
     return this._http.get('admin/getAllPropertyType');
+  }
+
+  removePropertyType(id:string):Observable<any>{
+    return this._http.delete(`admin/removePropertyType/${id}`)
   }
 }

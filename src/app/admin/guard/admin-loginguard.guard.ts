@@ -12,7 +12,7 @@ export class AdminLoginguardGuard implements CanActivate {
   canActivate(): boolean {
     if (this.adminService.isAdminLoggedIn()) {
       console.log('navigate');
-      this.router.navigate(['/admin/dashboard']); // redirect to the admin login page
+      this.router.navigate(['/admin']); // redirect to the admin login page
       return false; // allow navigation to the requested route
     } else {
       return true; // do not allow navigation to the requested route

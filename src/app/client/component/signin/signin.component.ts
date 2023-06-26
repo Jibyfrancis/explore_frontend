@@ -31,6 +31,7 @@ export class SigninComponent implements OnInit {
     { value: '+91', label: 'India (+91)' },
     // add more country codes here
   ];
+  errorMessage!:string
 
   constructor(
     private formBuilder: FormBuilder,
@@ -82,6 +83,8 @@ export class SigninComponent implements OnInit {
         );
         this.dialogRef.close();
       }
+    },(error)=>{
+      this.errorMessage=error.error.message
     });
   }
 

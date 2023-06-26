@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule,CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -22,6 +22,9 @@ import {
   HttpClientXsrfModule,
 } from '@angular/common/http';
 import { InterceptorHttpInterceptor } from './interceptor/interceptor-http.interceptor';
+import { ErrorHandlingInterceptor } from './interceptor/error-handling.interceptor';
+import { LottiePlayer } from '@lottiefiles/lottie-player';
+
 import { OtpComponent } from './client/component/otp/otp.component';
 import { UserDetailsComponent } from './client/component/user-details/user-details.component';
 import { LoginComponent } from './client/component/login/login.component';
@@ -29,9 +32,20 @@ import { AdminModule } from './admin/admin.module';
 import { UserLayoutComponent } from './client/component/user-layout.component';
 import { HostRequestComponent } from './client/component/host-request/host-request.component';
 import { HostPropertyComponent } from './client/component/host-request/host-property/host-property.component';
+import { ImagesliderComponent } from './client/component/home/imageslider/imageslider.component';
+import { PropertyDetailComponent } from './client/component/property-detail/property-detail.component';
+import { PaymentSuccessComponent } from './client/component/payment-success/payment-success.component';
+import { PaymentCancelComponent } from './client/component/payment-cancel/payment-cancel.component';
+import { BookingsComponent } from './client/component/bookings/bookings.component';
+import { CancelBookingComponent } from './client/component/bookings/cancel-booking/cancel-booking.component';
+
+
+
 
 
 @NgModule({
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+
   declarations: [
     AppComponent,
     HomeComponent,
@@ -42,7 +56,15 @@ import { HostPropertyComponent } from './client/component/host-request/host-prop
     LoginComponent,
     UserLayoutComponent,
     HostRequestComponent,
-    HostPropertyComponent
+    HostPropertyComponent,
+    ImagesliderComponent,
+    PropertyDetailComponent,
+    PaymentSuccessComponent,
+    PaymentCancelComponent,
+    BookingsComponent,
+    CancelBookingComponent
+
+
   ],
   imports: [
     BrowserModule,
@@ -60,6 +82,8 @@ import { HostPropertyComponent } from './client/component/host-request/host-prop
     AngularFireAuthModule,
     AdminModule,
 
+
+
   ],
   providers: [
     {
@@ -67,7 +91,13 @@ import { HostPropertyComponent } from './client/component/host-request/host-prop
       useClass: InterceptorHttpInterceptor,
       multi: true,
     },
+    {
+      provide:HTTP_INTERCEPTORS,
+      useClass:ErrorHandlingInterceptor,
+      multi:true
+    },
   ],
   bootstrap: [AppComponent],
+
 })
 export class AppModule {}

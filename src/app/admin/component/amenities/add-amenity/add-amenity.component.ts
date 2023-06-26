@@ -18,7 +18,7 @@ export class AddAmenityComponent implements OnInit {
     private formBuilder: FormBuilder,
     private adminServices: AdminService,
     private _snackBar: MatSnackBar
-  ) {}
+  ) { }
   ngOnInit() {
     this.amenityForm = this.formBuilder.group({
       name: ['', [Validators.required, Validators.pattern(/^[A-Z][a-z]*( [A-Z][a-z]*)*$/)]],
@@ -40,7 +40,7 @@ export class AddAmenityComponent implements OnInit {
       this.adminServices.addAmenity(formData).subscribe((res: any) => {
         if (res.status === 'Success') {
           this.amenityForm.reset();
-          this.url=""
+          this.url = ""
           this.showSnackbar = true;
           this.snackbarMessage = 'Amenity added successfully!';
           this.openSnackBar(this.snackbarMessage, this.snackbarValue);

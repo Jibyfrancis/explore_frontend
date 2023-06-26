@@ -23,26 +23,28 @@ export class AmenitiesComponent implements OnInit {
       console.log(res);
 
       const amenities: Amenity[] = res.amenities.map((amenity: Amenity) => ({
-        id: amenity._id,
+        _id: amenity._id,
         name: amenity.name,
         imageUrl: amenity.imageUrl,
       }));
       this.amenities = new MatTableDataSource(amenities);
+      console.log(amenities);
+
       this.showSpinner = true;
     });
   }
 
-  Remove(id: string) {
-    this.adminService.removeAmenity(id).subscribe((res: any) => {
-      if (res.status === 'Success') {
-        const index = this.amenities.data.findIndex(
-          (amenity) => amenity._id = id
-        );
 
-        if (index !== -1) {
-          this.amenities.data.splice(index, 1);
-          this.amenities = new MatTableDataSource(this.amenities.data);
-        }
+  Remove(amenity: Amenity) {
+
+    this.adminService.removeAmenity(amenity._id).subscribe((res: any) => {
+      if (res.status === 'Success') {
+        const amenities = this.amenities.data.filter((aminity:Amenity)=>{
+          return aminity._id !== amenity._id
+        })
+        this.amenities = new MatTableDataSource(amenities);
+        console.log(amenities);
+
       }
     });
   }

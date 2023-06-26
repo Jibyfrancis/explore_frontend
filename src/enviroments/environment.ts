@@ -15,6 +15,8 @@ commonUrl:'http://localhost:4000/',
 
 mapbox:{
   accessToken:'pk.eyJ1IjoiamlieWZyYW5jaXMiLCJhIjoiY2xoODIwNno5MDB5aTN0bnpseHhwMTYzZSJ9.n1PWjSOH8cKuLO3lwGjibg'
-}
+},
+
+stripePublishibleKey:'pk_test_51NKaUhSAbkZFi2q7JXC6g3wrrSLhzsEOVarmO7kn17ldWbIp3ZzWR9hM5Uu2OBh7N1hHagwiqkVRiBJEn1zfk6e700gnByELoN'
 
 }

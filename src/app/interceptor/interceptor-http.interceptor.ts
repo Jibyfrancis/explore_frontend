@@ -28,8 +28,6 @@ export class InterceptorHttpInterceptor implements HttpInterceptor {
     console.log(userToken)
     console.log(adminToken);
 
-
-
     if (userToken && adminToken) {
       const isAdminRoute = request.url.includes('admin');
       const mapApi=request.url.includes('mapbox');
@@ -41,10 +39,10 @@ export class InterceptorHttpInterceptor implements HttpInterceptor {
           url: request.url,
         });
         return next.handle(newRequest);
-     
-     
+
+
       }
-    
+
       if (isAdminRoute) {
         // Use admin token for admin routes
         console.log('admin');
@@ -91,8 +89,8 @@ export class InterceptorHttpInterceptor implements HttpInterceptor {
           url: request.url,
         });
         return next.handle(newRequest);
-     
-     
+
+
       }
       // Use user token if only user token is present
       const newRequest = request.clone({

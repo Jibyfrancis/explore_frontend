@@ -1,0 +1,28 @@
+<div class="container">
+  <div class="division">
+
+    <div class="filter">
+      <mat-card style="width: 200px;">
+        <mat-card-content>
+          <p>All</p>
+          <p *ngFor="let types of propertyTypes">{{types.name}}</p>
+        </mat-card-content>
+      </mat-card>
+
+    </div>
+    <div class="items">
+      <mat-card *ngFor="let property of properties" style="width: 300px; height: 300px;">
+        <app-imageslider [slides]="property.imageUrl" [propertyId]="property._id"
+          (idSelected)="onPropertyClick($event)"></app-imageslider>
+        <br />
+        <div (click)="onPropertyClick(property._id)">
+          <mat-card-title> {{ property.name }}</mat-card-title>
+          <mat-card-subtitle>
+            {{ property.address.address }}
+          </mat-card-subtitle>
+          <mat-card-title>₹ {{ property.price }}/night</mat-card-title>
+        </div>
+      </mat-card>
+    </div>
+  </div>
+</div>

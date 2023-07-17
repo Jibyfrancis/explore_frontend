@@ -1,13 +1,31 @@
-<mat-toolbar >
-  <mat-toolbar-row >
-   <a routerLink="" style="cursor: pointer; text-decoration: none;" ><h1 style="font-family: 'Roboto', sans-serif; font-size: 40px; letter-spacing: 1px; color: #333; font-weight: 500; margin-bottom: 0; ">Explore</h1></a>
+<mat-toolbar>
+  <mat-toolbar-row>
+    <a routerLink="" style="cursor: pointer; text-decoration: none">
+      <h1 style="
+          font-family: 'Roboto', sans-serif;
+          font-size: 40px;
+          letter-spacing: 1px;
+          color: #333;
+          font-weight: 500;
+          margin-bottom: 0;
+        ">
+        Explore
+      </h1>
+    </a>
     <span class="spacer"></span>
-    <button style="border-radius: 20px; margin-right: 1rem;" mat-raised-button (click)="hostRequest()">Host</button>
+    <button style="border-radius: 20px; margin-right: 1rem" mat-raised-button (click)="hostRequest()">
+      Host
+    </button>
     <!-- <span class="spacer"></span> -->
-    <div fxShow="true" fxShow.gt-sm="true" >
-      <button style="border-radius: 20px;"  mat-raised-button color="" [matMenuTriggerFor]="menu"  > {{ isLoggedIn ? user : '' }} <mat-icon>menu</mat-icon><mat-icon>account_circle</mat-icon></button>
-      <mat-menu #menu="matMenu" >
-        <button mat-menu-item *ngFor="let item of menuItems; trackBy: trackByFn" (click)="navigateToItem(item)">{{ item.name }}</button>
+    <div fxShow="true" fxShow.gt-sm="true">
+      <button style="border-radius: 20px" mat-raised-button color="" [matMenuTriggerFor]="menu">
+        {{ isLoggedIn ? user : "" }} <mat-icon>menu</mat-icon><mat-icon>account_circle</mat-icon>
+      </button>
+
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item *ngFor="let item of menuItems; trackBy: trackByFn" (click)="navigateToItem(item)">
+          {{ item.name }}
+        </button>
       </mat-menu>
     </div>
   </mat-toolbar-row>

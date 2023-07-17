@@ -24,6 +24,7 @@ import {
 import { InterceptorHttpInterceptor } from './interceptor/interceptor-http.interceptor';
 import { ErrorHandlingInterceptor } from './interceptor/error-handling.interceptor';
 import { LottiePlayer } from '@lottiefiles/lottie-player';
+import { LottieModule } from 'ngx-lottie';
 
 import { OtpComponent } from './client/component/otp/otp.component';
 import { UserDetailsComponent } from './client/component/user-details/user-details.component';
@@ -38,8 +39,16 @@ import { PaymentSuccessComponent } from './client/component/payment-success/paym
 import { PaymentCancelComponent } from './client/component/payment-cancel/payment-cancel.component';
 import { BookingsComponent } from './client/component/bookings/bookings.component';
 import { CancelBookingComponent } from './client/component/bookings/cancel-booking/cancel-booking.component';
+import { SearchComponent } from './client/component/search/search.component';
+import { ChatComponent } from './client/component/chat/chat.component';
+import { ListedPropertiesComponent } from './client/component/host-request/listed-properties/listed-properties.component';
+import { AlertComponent } from './shared/components/alert/alert.component';
+import { WaitingComponent } from './shared/components/waiting/waiting.component';
 
 
+// export function playerFactory() { // add this line
+//   return import('lottie-web'); // add this line
+// } // add this line
 
 
 
@@ -62,7 +71,12 @@ import { CancelBookingComponent } from './client/component/bookings/cancel-booki
     PaymentSuccessComponent,
     PaymentCancelComponent,
     BookingsComponent,
-    CancelBookingComponent
+    CancelBookingComponent,
+    SearchComponent,
+    ChatComponent,
+    ListedPropertiesComponent,
+    AlertComponent,
+    WaitingComponent
 
 
   ],
@@ -81,6 +95,9 @@ import { CancelBookingComponent } from './client/component/bookings/cancel-booki
     HttpClientXsrfModule,
     AngularFireAuthModule,
     AdminModule,
+
+
+
 
 
 

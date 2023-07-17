@@ -5,10 +5,6 @@ interface Amenity {
   __v: number;
 }
 
-interface Address {
-  address: string;
-}
-
 interface User {
   userName: string;
 }
@@ -18,7 +14,7 @@ export interface PropertyDetailsInterface {
   name: string;
   description: string;
   roomType: string;
-  address: Address;
+  address: string;
   price: number;
   guest: number;
   bedroom: number;

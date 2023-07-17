@@ -28,20 +28,20 @@ export class InterceptorHttpInterceptor implements HttpInterceptor {
     console.log(userToken)
     console.log(adminToken);
 
+    const mapApi=request.url.includes('mapbox');
+    if(mapApi){
+      const newRequest = request.clone({
+        setHeaders: {
+          Authorization: `Bearer ${userToken}`,
+        },
+        url: request.url,
+      });
+      return next.handle(newRequest);
+
+
+    }
     if (userToken && adminToken) {
       const isAdminRoute = request.url.includes('admin');
-      const mapApi=request.url.includes('mapbox');
-      if(mapApi){
-        const newRequest = request.clone({
-          setHeaders: {
-            Authorization: `Bearer ${userToken}`,
-          },
-          url: request.url,
-        });
-        return next.handle(newRequest);
-
-
-      }
 
       if (isAdminRoute) {
         // Use admin token for admin routes

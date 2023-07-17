@@ -10,6 +10,9 @@ import { AdminComponent } from './admin/admin.component';
 import { PaymentSuccessComponent } from './client/component/payment-success/payment-success.component';
 import { PaymentCancelComponent } from './client/component/payment-cancel/payment-cancel.component';
 import { BookingsComponent } from './client/component/bookings/bookings.component';
+import { SearchComponent } from './client/component/search/search.component';
+import { ChatComponent } from './client/component/chat/chat.component';
+import { ListedPropertiesComponent } from './client/component/host-request/listed-properties/listed-properties.component';
 
 
 const routes: Routes = [
@@ -21,7 +24,11 @@ const routes: Routes = [
     {path:'property-detail/:id',component:PropertyDetailComponent},
     {path:'success',component:PaymentSuccessComponent,canActivate:[UserAuthGuard]},
     {path:'cancel',component:PaymentCancelComponent,canActivate:[UserAuthGuard]},
-    {path:'booking',component:BookingsComponent,canActivate:[UserAuthGuard]}
+    {path:'booking',component:BookingsComponent,canActivate:[UserAuthGuard]},
+    {path:'search',component:SearchComponent},
+    {path:'chat',component:ChatComponent},
+    {path:'listed-property',component:ListedPropertiesComponent}
+
   ]},
   {path:'admin',component:AdminComponent, loadChildren: ()=> import('./admin/admin.module').then(m => m.AdminModule)}
 ];

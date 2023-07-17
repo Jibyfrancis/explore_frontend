@@ -1,7 +1,7 @@
 <div class="cancel">
-  <h1>Cancel Booking</h1>
+  <h1>{{inputText? "Remove": "Cancel Booking"}}</h1>
 
-  <p>Do you want to cancel this booking??</p>
+  <p>{{inputText? "Do you want to remove this property":"Do you want to cancel this booking??"}}</p>
   <div class="btn">
     <button mat-raised-button (click)="onCancel()">No</button>
     <button mat-raised-button (click)="onConfirm()">Yes</button>

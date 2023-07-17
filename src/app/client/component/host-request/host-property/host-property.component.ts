@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, ViewChild, OnDestroy, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { MatStepper } from '@angular/material/stepper';
 import { AdminService } from 'src/app/admin/services/admin.service';
@@ -8,6 +8,8 @@ import {
   Feature,
 } from 'src/app/services/mapbox-service.service';
 import { faUpload } from '@fortawesome/free-solid-svg-icons';
+import { Router } from '@angular/router';
+
 
 
 export interface Amenity {
@@ -15,7 +17,7 @@ export interface Amenity {
   name: string;
   imageUrl: string;
 }
-export interface Type {
+export interface TypeOfProperty {
   _id: string;
   name: string;
   imageUrl: string;
@@ -27,60 +29,111 @@ export interface Type {
   styleUrls: ['./host-property.component.css'],
 })
 export class HostPropertyComponent implements OnInit {
+  @Input() PropertyId: any
+  @Output() toPlist = new EventEmitter<string>()
+
   @ViewChild(MatStepper)
+  property!: any
   stepper!: MatStepper;
-  upload= faUpload
+  upload = faUpload
   currentUserId: string = ''
-  propertyTypes!: Type[];
+  propertyTypes!: TypeOfProperty[];
   amenities!: Amenity[];
   selectedAmenity: any;
   addresses: string[] = [];
-  selectedAddress!: string;
-  selectedType!: Type;
+  selectedAddress!: string
+  selectedType!: TypeOfProperty;
   photoFormGroup!: FormGroup;
   propertyForm!: FormGroup
   propertyFormGroup!: FormGroup;
+  amenityFormGroup!: FormGroup
   selectedAmenities: any[] = [];
+  deletePhoto:any[]=[]
   geometry: any;
   lat!: any;
   long!: any;
   photoUrls: any[] = [];
   imageUrls: any = [];
+  ids: string = ''
 
   constructor(
     private _formBuilder: FormBuilder,
     private adminService: AdminService,
     private mapboxService: MapboxServiceService,
-    private userService: UserService
-  ) {
-    this.photoFormGroup = this._formBuilder.group({
-      amenities: [this.selectedAmenities],
-      photos: [this.photoUrls,],
-    });
+    private userService: UserService,
+    private router: Router
 
-  }
-
+  ) { }
 
   ngOnInit(): void {
-
     const data = localStorage.getItem('user');
+    // this.userService.propertyId$.subscribe((id: string) => { this.ids = id })
+    if (this.PropertyId) {
+      this.userService.getPropertyById(this.PropertyId).subscribe((data: any) => {
+        console.log(data);
+
+        this.property = data.property[0]
+        // console.log(this.property);
+        // for(let key in this.property){
+        //   console.log(key);
+        // }
+        this.lat = this.property.location.lat
+        this.long = this.property.location.long
+        this.selectedAddress = this.property.address
+        this.selectedAmenities = this.property.amenitydetails.map((data: Amenity) => data._id)
+        this.imageUrls = [...this.property.imageUrl]
+        // console.log(this.imageUrls);
+        this.propertyform()
+        this.propertygroupform()
+        this.setphoto()
+      })
+    }
+    else {
+      console.log('noidd');
+
+      // this.propertyform()
+      // this.propertygroupform()
+      // this.setphoto()
+      this.propertyForm = this._formBuilder.group({
+        name: [""],
+        description: [''],
+      });
+
+      this.propertyFormGroup = this._formBuilder.group({
+        roomType: ['',],
+        address: [this.selectedAddress],
+        location: [
+          { lat: this.lat, long: this.long },
+        ],
+        price: ['',],
+        guest: ['',],
+        bedroom: ['',],
+        bathrooms: ['',],
+        kitchen: ['',],
+        balcony: ['',],
+      });
+    }
 
     if (data) {
       const userData = JSON.parse(data);
       const userId = userData?.user._id;
       this.currentUserId = userId
     }
+
+    this.photoFormGroup = this._formBuilder.group({
+      amenities: [this.selectedAmenities],
+      photos: [this.photoUrls,],
+    });
+
     this.adminService.getAllAmenity().subscribe((res: any) => {
       console.log(res);
       this.amenities = res.amenities;
     });
+
     this.adminService.getAllPropertyType().subscribe((res: any) => {
       this.propertyTypes = res.propertyType;
     });
-    this.propertyForm = this._formBuilder.group({
-      name: ['',],
-      description: ['',],
-    });
+
 
     // this.propertyForm = this._formBuilder.group({
     //   name: ['',[Validators.required,Validators.pattern('[a-zA-Z ]*')]],
@@ -88,20 +141,19 @@ export class HostPropertyComponent implements OnInit {
     // });
 
 
-
-    this.propertyFormGroup = this._formBuilder.group({
-      roomType: ['',],
-      address: [this.selectedAddress],
-      location: [
-        { lat: this.lat, long: this.long },
-      ],
-      price: ['',],
-      guest: ['',],
-      bedroom: ['',],
-      bathrooms: ['',],
-      kitchen: ['',],
-      balcony: ['',],
-    });
+    // this.propertyFormGroup = this._formBuilder.group({
+    //   roomType: ['',],
+    //   address: [this.selectedAddress],
+    //   location: [
+    //     { lat: this.lat, long: this.long },
+    //   ],
+    //   price: ['',],
+    //   guest: ['',],
+    //   bedroom: ['',],
+    //   bathrooms: ['',],
+    //   kitchen: ['',],
+    //   balcony: ['',],
+    // });
 
     // this.propertyFormGroup = this._formBuilder.group({
     //   roomType: ['',Validators.required],
@@ -118,11 +170,36 @@ export class HostPropertyComponent implements OnInit {
     // });
 
 
+    this.amenityFormGroup = this._formBuilder.group({
+      amenities: this._formBuilder.array([]),
+    });
   }
 
-  amenityFormGroup = this._formBuilder.group({
-    amenities: this._formBuilder.array([]),
-  });
+
+  propertyform() {
+    console.log(this.property.name);
+
+    this.propertyForm = this._formBuilder.group({
+      name: [this.property ? this.property.name : ""],
+      description: [this.property ? this.property.description : ''],
+    });
+  }
+  propertygroupform() {
+    this.propertyFormGroup = this._formBuilder.group({
+      roomType: [this.property ? this.property.roomType : '',],
+      address: [this.selectedAddress],
+      location: [
+        { lat: this.lat, long: this.long },
+      ],
+      price: [this.property ? this.property.price : '',],
+      guest: [this.property ? this.property.guest : '',],
+      bedroom: [this.property ? this.property.bedroom : '',],
+      bathrooms: [this.property ? this.property.bathrooms : '',],
+      kitchen: [this.property ? this.property.kitchen : '',],
+      balcony: [this.property ? this.property.balcony : '',],
+    });
+  }
+
 
   photosLengthValidator(formGroup: FormGroup) {
     const photos = formGroup.get('photos')?.value;
@@ -172,7 +249,7 @@ export class HostPropertyComponent implements OnInit {
   onSelect(address: string) {
     console.log(address);
     this.selectedAddress = address;
-    this.propertyFormGroup.get('address')?.setValue({
+    this.propertyFormGroup.patchValue({
       address: this.selectedAddress
     })
     console.log(this.lat, this.long);
@@ -181,12 +258,9 @@ export class HostPropertyComponent implements OnInit {
   }
 
   onFileChange(event: any) {
+    // this.imageUrls = []
     const selectedFiles = event.target.files;
-
-
     console.log(selectedFiles);
-
-
     for (let i = 0; i < selectedFiles.length; i++) {
       const fileReader = new FileReader();
       const file = selectedFiles[i];
@@ -200,17 +274,25 @@ export class HostPropertyComponent implements OnInit {
     }
   }
 
+  setphoto() {
+    this.photoFormGroup.get('photos')?.setValue(this.imageUrls);
+  }
+  removePhoto(photoUrl: string): void {
+    console.log(photoUrl);
+    this.deletePhoto.push(photoUrl)
+
+    this.imageUrls = this.imageUrls.filter((url: string) => url !== photoUrl);
+    console.log(this.imageUrls);
+
+  }
+
 
   submit() {
-    console.log(this.propertyFormGroup);
+    console.log(this.propertyFormGroup.value);
     const formData = new FormData();
     formData.append('name', this.propertyForm.get('name')?.value);
-    formData.append(
-      'description',
-      this.propertyForm.get('description')?.value
-    );
-    formData.append('roomType', JSON.stringify(this.propertyFormGroup.get('roomType')?.value));
-
+    formData.append('description', this.propertyForm.get('description')?.value);
+    formData.append('roomType', this.propertyFormGroup.get('roomType')?.value);
     formData.append('location', JSON.stringify(this.propertyFormGroup.get('location')?.value));
     formData.append('address', JSON.stringify(this.propertyFormGroup.get('address')?.value))
     formData.append('price', this.propertyFormGroup.get('price')?.value);
@@ -226,16 +308,60 @@ export class HostPropertyComponent implements OnInit {
     for (let i = 0; i < photos.length; i++) {
       formData.append('photos', photos[i]);
     }
-
-    this.userService.createList(formData).subscribe((res) => {
+    this.userService.hostNewproperty(formData).subscribe((res) => {
       this.photoUrls = []
       this.imageUrls = [];
       this.selectedAmenities = [];
       this.addresses = [];
-
-
-      // this.stepper.reset()
       console.log(res);
     });
   }
+  update() {
+    console.log('updateeee');
+    console.log(this.propertyFormGroup.value);
+    const formData = new FormData();
+    formData.append('proId',this.PropertyId)
+    formData.append('name', this.propertyForm.get('name')?.value);
+    formData.append('description', this.propertyForm.get('description')?.value);
+    formData.append('roomType', this.propertyFormGroup.get('roomType')?.value);
+    formData.append('location', JSON.stringify(this.propertyFormGroup.get('location')?.value));
+    formData.append('address', JSON.stringify(this.propertyFormGroup.get('address')?.value))
+    formData.append('price', this.propertyFormGroup.get('price')?.value);
+    formData.append('guest', this.propertyFormGroup.get('guest')?.value);
+    formData.append('bedroom', this.propertyFormGroup.get('bedroom')?.value);
+    formData.append('bathrooms', this.propertyFormGroup.get('bathrooms')?.value);
+    formData.append('kitchen', this.propertyFormGroup.get('kitchen')?.value);
+    formData.append('balcony', this.propertyFormGroup.get('balcony')?.value);
+    formData.append('amenities', JSON.stringify(this.selectedAmenities));
+    formData.append('userId', this.currentUserId)
+    formData.append('deleteimg',JSON.stringify(this.deletePhoto))
+    const updateimage=this.imageUrls.filter((urls:any)=> !urls.startsWith('data:'))
+
+    formData.append('imageurls', JSON.stringify(updateimage))
+
+    const photos = this.photoUrls
+    for (let i = 0; i < photos.length; i++) {
+      formData.append('photos', photos[i]);
+    }
+    console.log(formData);
+
+    this.userService.editProperty(formData).subscribe((res: any) => {
+
+      this.toPlist.emit("")
+      this.photoUrls = []
+      this.imageUrls = [];
+      this.deletePhoto=[]
+      this.selectedAmenities = [];
+      this.addresses = [];
+      this.router.navigateByUrl('listed-property')
+      console.log(res);
+    });
+
+  }
+  updatePId() {
+    console.log('emitting');
+    this.toPlist.emit("")
+  }
+
 }
+

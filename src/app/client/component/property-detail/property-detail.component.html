@@ -1,17 +1,5 @@
 <!-- waiting div -->
-<div class="waiting"  *ngIf="paymentresponse">
-
-  <svg class="pl" width="240" height="240" viewBox="0 0 240 240">
-    <circle class="pl__ring pl__ring--a" cx="120" cy="120" r="105" fill="none" stroke="#000" stroke-width="20"
-      stroke-dasharray="0 660" stroke-dashoffset="-330" stroke-linecap="round"></circle>
-    <circle class="pl__ring pl__ring--b" cx="120" cy="120" r="35" fill="none" stroke="#000" stroke-width="20"
-      stroke-dasharray="0 220" stroke-dashoffset="-110" stroke-linecap="round"></circle>
-    <circle class="pl__ring pl__ring--c" cx="85" cy="120" r="70" fill="none" stroke="#000" stroke-width="20"
-      stroke-dasharray="0 440" stroke-linecap="round"></circle>
-    <circle class="pl__ring pl__ring--d" cx="155" cy="120" r="70" fill="none" stroke="#000" stroke-width="20"
-      stroke-dasharray="0 440" stroke-linecap="round"></circle>
-  </svg>
-</div>
+<app-waiting [control]="paymentresponse"></app-waiting>
 <!-- waiting div -->
 <div class="container">
   <div class="" style="padding-top: 16px">
@@ -19,7 +7,7 @@
       {{properties.name}}
     </h1>
     <h6>
-      <mat-icon>location_on</mat-icon>{{properties.address.address}}
+      <mat-icon>location_on</mat-icon>{{properties.address}}
     </h6>
     <div style="background-color: rgb(255, 255, 255)">
 
@@ -32,7 +20,7 @@
   </div>
   <div class="host">
     <h1>
-      <mat-icon>account_circle</mat-icon>Farm house hosted by{{properties.user[0].userName}}
+      <mat-icon>account_circle</mat-icon>{{properties.roomType}} hosted by{{properties.user[0].userName}}
     </h1>
   </div>
 
@@ -145,6 +133,8 @@
             </div>
             <br>
             <button mat-raised-button color="primary" (click)="onCheckOut()"> {{ loggedIn ? 'Reserve' : 'Please Login' }} </button>
+            <br>
+            <button mat-raised-button color="primary" (click)="chat()"> <fa-icon [icon]="chatIcon"></fa-icon> Chat with Host </button>
             <br>
             <div class="pernight">
               <div class="night">₹ {{properties.price}} x {{nights}} nights</div>

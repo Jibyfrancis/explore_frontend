@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { faBed, faBath, faKitchenSet } from '@fortawesome/free-solid-svg-icons';
+import { faMessage } from '@fortawesome/free-regular-svg-icons';
 import { UserService } from '../../services/user.service';
 import { ActivatedRoute, Route, Router } from '@angular/router';
 import { PropertyDetailsInterface } from 'src/app/models/singlePropert';
@@ -22,6 +23,7 @@ export class PropertyDetailComponent implements OnInit {
   bedrooms = faBed;
   bathroom = faBath;
   kitchen = faKitchenSet;
+  chatIcon=faMessage
   properties!: PropertyDetailsInterface
   loggedIn!: boolean
   adult: number = 1;
@@ -128,7 +130,7 @@ export class PropertyDetailComponent implements OnInit {
       this.checkOutItem = {
         _id: this.properties._id,
         propertyName: this.properties.name,
-        propertyAddress: this.properties.address.address,
+        propertyAddress: this.properties.address,
         image: this.properties.imageUrl[0],
         adult: this.adult,
         children: this.children,
@@ -153,6 +155,9 @@ export class PropertyDetailComponent implements OnInit {
       const dialogRef = this.dialog.open(SigninComponent);
     }
 
+  }
+  chat(){
+this.router.navigate(['chat'])
   }
 
 }

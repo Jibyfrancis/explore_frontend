@@ -62,7 +62,7 @@ export class HeaderComponent implements OnInit {
       return [
         { name: 'Logout' },
         { name: 'Profile' },
-        {name:'My Properties'},
+        {name:'View Listed'},
         {name:'My Booking'}
       ];
     }
@@ -88,6 +88,9 @@ export class HeaderComponent implements OnInit {
     if(item.name==='My Booking'){
       this.myBooking()
     }
+    if(item.name==='View Listed'){
+      this.myProperties()
+    }
     // else {
     //   this.router.navigate(['/items', item]);
     // }
@@ -112,11 +115,12 @@ export class HeaderComponent implements OnInit {
   profile() {
     alert()
 
-
-
   }
   myBooking(){
     this.router.navigateByUrl('booking')
+  }
+  myProperties(){
+    this.router.navigateByUrl('listed-property')
   }
 
   logout() {

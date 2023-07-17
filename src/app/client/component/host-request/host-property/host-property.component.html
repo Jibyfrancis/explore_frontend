@@ -1,3 +1,4 @@
+
 <div class="container">
   <div class="imagediv">
     <img style="width: 100%" src="../../../../assets/images/bg1.jpg" alt="" />
@@ -38,7 +39,7 @@
                 <mat-form-field>
                   <mat-label>Type</mat-label>
                   <mat-select (value)="selectedType._id" formControlName="roomType">
-                    <mat-option *ngFor="let type of propertyTypes" [value]="type.name">
+                    <mat-option *ngFor="let type of propertyTypes" [value]='type.name'>
                       <img [src]="type.imageUrl" alt="{{ type.name }}" height="20px" width="20px" />
                       {{ type.name }}
                     </mat-option>
@@ -129,7 +130,7 @@
                   </mat-card-title-group>
                 </mat-card-header>
                 <mat-card-content>
-                  <mat-checkbox (change)="onAmenityChange($event, amenity._id)">{{
+                  <mat-checkbox (change)="onAmenityChange($event, amenity._id)" [checked]="selectedAmenities.includes(amenity._id)">{{
                     amenity.name }}</mat-checkbox>
                 </mat-card-content>
               </mat-card>
@@ -147,6 +148,8 @@
               <div style="display: flex; flex-wrap: wrap">
                 <div *ngFor="let photo of imageUrls" style="flex: 1">
                   <img [src]="photo" height="50" />
+                  <button mat-icon-button color="warn" (click)="removePhoto(photo)"><mat-icon >delete</mat-icon>
+                  </button>
                 </div>
               </div>
             </div>
@@ -160,7 +163,9 @@
             <mat-error *ngIf="photoFormGroup.get('photos')?.hasError('minlength')">Select atleast 5 images</mat-error>
             <div>
               <button mat-button matStepperPrevious>Back</button>
-              <button mat-button matStepperNext (click)="submit(); ">Submit</button>
+              <button mat-button matStepperNext (click)="PropertyId ? update():submit()" [disabled]="imageUrls.length != 6">
+                {{ PropertyId ?'Update': 'Submit' }}
+              </button>
             </div>
           </mat-step>
 
@@ -170,7 +175,10 @@
           <p>You are now done.</p>
           <div>
 
-            <button mat-button (click)="stepper.reset()">List Another One</button>
+            <button mat-button (click)="PropertyId ? updatePId() : stepper.reset()">
+              {{ PropertyId ? 'Back to Listed Property' : 'List Another One' }}
+            </button>
+
           </div>
         </mat-step>
       </mat-stepper>
